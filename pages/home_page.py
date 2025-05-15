@@ -1,11 +1,19 @@
 import allure
 
 from ..locators.home import HomeLocator
+from .base import BasePage
 
 
-class Question:
-    def __init__(self, browser):
-        self.__browser = browser
+class HomePage(BasePage):
+
+    @allure.step("Прокрутка до кнопки заказад на домашней странице")
+    def scrol_button_order_click(self):
+        button = self.get_element(HomeLocator.order)
+        self.scrol_to_element(button)
+        self.get_button_click(element=button)
+
+
+class QuestionPage(BasePage):
 
     @allure.step("Получаем атрибут hidden у элемента ответа")
     def answer_status_hidden(self, element):
@@ -19,7 +27,7 @@ class Question:
             HomeLocator.Question.question_xpath_pattern[0],
             update_xpath
         )
-        element = self.__browser.find_element(*new_path)
+        element = self.get_element(new_path)
         return element
 
     @allure.step("Получаем ответ")
@@ -28,5 +36,5 @@ class Question:
         new_path = (
             HomeLocator.Question.answer_xpath_pattern_question[0],
             update_xpath)
-        element = self.__browser.find_element(*new_path)
+        element = self.get_element(new_path)
         return element

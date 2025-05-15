@@ -2,11 +2,9 @@ import allure
 
 from ..urls.urls import URLS
 from ..pages.order_page import OrderPageOne, OrderPageTwo
-from ..utilities.utilits import scrol_for_element
-from ..utilities.wait import Wait
-from ..locators.order import PageConfirm
+from ..pages.home_page import HomePage
+from ..locators.order import PageConfirmLocator
 from ..locators.header import HeaderLocator
-from ..locators.home import HomeLocator
 from ..data.form import DataOrderForm
 
 
@@ -17,15 +15,15 @@ class TestOrderCase:
                 нажатием на кнопку в шапке странице""")
     def test_order_rus_first_last_name_button_header(self, browser_def):
         """тест: бронирование самоката, нажатием на кнопку в шапке странице"""
-        browser_def.get(URLS['home'])
-        browser_def.find_element(*HeaderLocator.order).click()
         data = DataOrderForm.get_data()
         order = OrderPageOne(browser_def)
+        order.open_url(URLS['home'])
+        order.get_button_click(path=HeaderLocator.order)
         order.complete_form(**data['page_one'])
         order = OrderPageTwo(browser_def)
         order.complete_form(**data['page_two'])
         status = order.return_status_order()
-        assert PageConfirm.text in status
+        assert PageConfirmLocator.text in status
 
     @allure.title("""Тест: бронирование самоката,
                 нажатием на кнопку на главной странице,с новыми данными""")
@@ -34,14 +32,13 @@ class TestOrderCase:
         тест: бронирование самоката, нажатием на кнопку на главной странице,
         с новыми данными
         """
-        browser_def.get(URLS['home'])
-        button = browser_def.find_element(*HomeLocator.order)
-        scrol_for_element(browser_def, button)
-        Wait.click(browser_def, element=button)
+        home = HomePage(browser_def)
+        home.open_url(URLS['home'])
+        home.scrol_button_order_click()
         data = DataOrderForm.get_new_data()
         order = OrderPageOne(browser_def)
         order.complete_form(**data['page_one'])
         order = OrderPageTwo(browser_def)
         order.complete_form(**data['page_two'])
         status = order.return_status_order()
-        assert PageConfirm.text in status
+        assert PageConfirmLocator.text in status

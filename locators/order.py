@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
 
-class PageOne:
+class PageOneLocator:
     first_name = (By.XPATH, ".//input[@placeholder='* Имя']")
     last_name = (By.XPATH, ".//input[@placeholder='* Фамилия']")
     address = (By.XPATH, ".//input[@placeholder='* Адрес: куда привезти заказ']")
@@ -19,7 +19,7 @@ class PageOne:
     error_phone_text = "Введите корректный номер"
 
 
-class PageTwo:
+class PageTwoLocator:
     date = (By.XPATH, ".//input[@placeholder='* Когда привезти самокат']")
     calendar = (By.XPATH, ".//div[@class='react-datepicker']")
     rent = (By.XPATH, ".//div[text()='* Срок аренды']")
@@ -31,7 +31,7 @@ class PageTwo:
     back = (By.XPATH, ".//div[@class='Order_Buttons__1xGrp']/button[text()='Назад']")
 
 
-class PageConfirm:
+class PageConfirmLocator:
     yes = (By.XPATH, ".//button[text()='Да']")
     no = (By.XPATH, ".//button[text()='Нет']")
     status = (By.XPATH, ".//button[text()='Посмотреть статус']")
